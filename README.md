@@ -13,11 +13,17 @@ Pipeline: `yt-dlp` (download) → `ffmpeg` (trim + reframe ke 9:16) → S3 (temp
 
 ## Phase 1 (current) — Core Pipeline
 
+Backend:
 - [x] `POST /api/fetch-info` — metadata YouTube via `yt-dlp`
 - [x] `POST /api/convert` — enqueue Celery job
 - [x] Celery pipeline: download → convert 9:16 → upload S3
 - [x] `GET /api/jobs/{id}` — snapshot status
 - [x] `GET /api/jobs/{id}/status` — SSE stream real-time progress
+
+Frontend (Next.js 14 + Tailwind):
+- [x] 4-step flow: URL → Preview → Options → Progress
+- [x] Real-time progress bar dari SSE
+- [x] Pilih aspect (9:16 / 1:1 / 16:9) + trim start/end
 
 ## Phase 2 (next) — TikTok Integration
 
@@ -38,8 +44,18 @@ cp .env.example .env
 docker compose up --build
 ```
 
+- Web: http://localhost:3000
 - API: http://localhost:8000 (docs di `/docs`)
 - Worker logs: `docker compose logs -f worker`
+
+### Frontend-only dev (tanpa docker)
+
+```bash
+cd web
+cp .env.example .env.local   # set NEXT_PUBLIC_API_BASE_URL bila API di host lain
+npm install
+npm run dev
+```
 
 ### Contoh pemakaian
 
@@ -63,7 +79,24 @@ curl -N http://localhost:8000/api/jobs/<uuid>/status
 ## Layout
 
 ```
-app/
+web/                   # Next.js 14 (App Router) + Tailwind
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx       # state machine 4-step
+│   └── globals.css
+├── components/
+│   ├── Stepper.tsx
+│   └── steps/
+│       ├── StepUrl.tsx
+│       ├── StepPreview.tsx
+│       ├── StepOptions.tsx
+│       └── StepProgress.tsx  # EventSource → SSE
+└── lib/
+    ├── api.ts         # fetch + subscribeJob helper
+    ├── types.ts
+    └── format.ts
+
+app/                   # FastAPI backend
 ├── main.py            # FastAPI app factory
 ├── config.py          # Settings (pydantic-settings)
 ├── database.py        # Async SQLAlchemy session
