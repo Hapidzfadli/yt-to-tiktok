@@ -23,6 +23,16 @@ class Settings(BaseSettings):
 
     media_dir: str = "/tmp/yt2tt"
 
+    tiktok_client_key: str = ""
+    tiktok_client_secret: str = ""
+    tiktok_redirect_uri: str = "http://localhost:8000/api/auth/tiktok/callback"
+    tiktok_scopes: str = "user.info.basic,video.upload,video.publish"
+    tiktok_api_base: str = "https://open.tiktokapis.com"
+    tiktok_auth_base: str = "https://www.tiktok.com"
+    tiktok_post_connect_redirect: str = "http://localhost:3000"
+
+    fernet_key: str = ""
+
     @property
     def cors_origins_list(self) -> list[str]:
         return [o.strip() for o in self.app_cors_origins.split(",") if o.strip()]
@@ -30,6 +40,12 @@ class Settings(BaseSettings):
     @property
     def s3_enabled(self) -> bool:
         return bool(self.s3_bucket and self.aws_access_key_id and self.aws_secret_access_key)
+
+    @property
+    def tiktok_enabled(self) -> bool:
+        return bool(
+            self.tiktok_client_key and self.tiktok_client_secret and self.fernet_key
+        )
 
 
 @lru_cache

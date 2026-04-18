@@ -32,3 +32,32 @@ export interface ProgressEvent {
   output_url?: string;
   error?: string;
 }
+
+export type PublishStatus =
+  | "pending"
+  | "uploading"
+  | "processing"
+  | "published"
+  | "failed";
+
+export interface PublishProgressEvent {
+  kind: "publish";
+  id: string;
+  status: PublishStatus;
+  progress: number;
+  publish_id?: string;
+  error?: string;
+}
+
+export interface TiktokAccount {
+  open_id: string;
+  display_name: string | null;
+  avatar_url: string | null;
+  scopes: string;
+  connected_at: string;
+}
+
+export type PrivacyLevel =
+  | "SELF_ONLY"
+  | "PUBLIC_TO_EVERYONE"
+  | "MUTUAL_FOLLOW_FRIENDS";

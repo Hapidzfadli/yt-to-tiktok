@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import jobs, videos
+from app.api import auth, jobs, tiktok, videos
 from app.config import get_settings
 from app.database import Base, engine
 
@@ -30,6 +30,8 @@ app.add_middleware(
 
 app.include_router(videos.router, prefix="/api", tags=["videos"])
 app.include_router(jobs.router, prefix="/api", tags=["jobs"])
+app.include_router(auth.router, prefix="/api", tags=["auth"])
+app.include_router(tiktok.router, prefix="/api", tags=["tiktok"])
 
 
 @app.get("/health")

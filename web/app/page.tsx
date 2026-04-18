@@ -6,11 +6,12 @@ import { Stepper } from "@/components/Stepper";
 import { StepOptions } from "@/components/steps/StepOptions";
 import { StepPreview } from "@/components/steps/StepPreview";
 import { StepProgress } from "@/components/steps/StepProgress";
+import { StepPublish } from "@/components/steps/StepPublish";
 import { StepUrl } from "@/components/steps/StepUrl";
 import { convert, fetchInfo } from "@/lib/api";
 import type { ConvertOptions, VideoInfo } from "@/lib/types";
 
-const STEPS = ["URL", "Preview", "Opsi", "Progress"];
+const STEPS = ["URL", "Preview", "Opsi", "Progress", "Publish"];
 
 export default function HomePage() {
   const [step, setStep] = useState(1);
@@ -100,12 +101,23 @@ export default function HomePage() {
             />
           )}
           {step === 4 && jobId && (
-            <StepProgress jobId={jobId} onRestart={restart} />
+            <StepProgress
+              jobId={jobId}
+              onRestart={restart}
+              onPublish={() => setStep(5)}
+            />
+          )}
+          {step === 5 && jobId && (
+            <StepPublish
+              convertJobId={jobId}
+              defaultCaption={info?.title ?? ""}
+              onRestart={restart}
+            />
           )}
         </section>
 
         <footer className="mt-8 text-center text-xs text-neutral-500">
-          Phase 1 MVP · backend: FastAPI + Celery + Redis
+          Phase 2 · FastAPI + Celery + TikTok Content Posting API v2
         </footer>
       </div>
     </main>
