@@ -1,5 +1,5 @@
 from datetime import datetime
-from enum import Enum
+from enum import StrEnum
 
 from sqlalchemy import JSON, DateTime, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
@@ -8,7 +8,7 @@ from sqlalchemy.sql import func
 from app.database import Base
 
 
-class JobStatus(str, Enum):
+class JobStatus(StrEnum):
     PENDING = "pending"
     DOWNLOADING = "downloading"
     CONVERTING = "converting"
@@ -45,7 +45,7 @@ class Job(Base):
     )
 
 
-class PublishStatus(str, Enum):
+class PublishStatus(StrEnum):
     PENDING = "pending"
     UPLOADING = "uploading"
     PROCESSING = "processing"

@@ -2,13 +2,12 @@ from __future__ import annotations
 
 import json
 import secrets
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import redis.asyncio as aioredis
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi import Depends
 
 from app.config import get_settings
 from app.database import get_session
@@ -83,13 +82,13 @@ async def tiktok_callback(
         tokens = await exchange_code(code, verifier)
         user = await fetch_user_info(tokens["access_token"])
     except TiktokError as e:
-        raise HTTPException(status_code=502, detail=str(e))
+        raise HTTPException(status_code=502, detail=str(e)) from e
 
     open_id = user.get("open_id") or tokens.get("open_id")
     if not open_id:
         raise HTTPException(status_code=502, detail="TikTok did not return open_id")
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     account = await session.get(TiktokAccount, open_id)
     if account is None:
         account = TiktokAccount(open_id=open_id)

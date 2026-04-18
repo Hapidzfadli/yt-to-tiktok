@@ -4,7 +4,7 @@ import os
 import shutil
 import time
 import traceback
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import httpx
@@ -133,7 +133,7 @@ def _publish_emit(publish_job_id: str, status: str, progress: int, **extra) -> N
 
 def _ensure_fresh_token(open_id: str) -> str:
     """Return a valid access token, refreshing + persisting if needed."""
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     with session_scope() as session:
         account = session.get(TiktokAccount, open_id)
         if account is None:

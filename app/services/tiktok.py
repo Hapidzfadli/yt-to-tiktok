@@ -4,7 +4,7 @@ import base64
 import hashlib
 import os
 import secrets
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Any
 from urllib.parse import urlencode
 
@@ -50,7 +50,7 @@ def authorize_url(state: str, code_challenge: str) -> str:
 
 
 def _now() -> datetime:
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)
 
 
 async def exchange_code(code: str, code_verifier: str) -> dict[str, Any]:

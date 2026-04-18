@@ -3,13 +3,14 @@ from __future__ import annotations
 import uuid
 from typing import Literal
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel, Field
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database import get_session
 from app.models import Job, JobStatus, PublishJob, PublishStatus, TiktokAccount
 from app.tasks import publish_to_tiktok
+from app.utils.ratelimit import limiter
 
 router = APIRouter()
 
@@ -41,8 +42,11 @@ class PublishJobView(BaseModel):
 
 
 @router.post("/tiktok/publish", response_model=PublishJobCreated, status_code=202)
+@limiter.limit("10/minute")
 async def publish_endpoint(
-    payload: PublishRequest, session: AsyncSession = Depends(get_session)
+    request: Request,
+    payload: PublishRequest,
+    session: AsyncSession = Depends(get_session),
 ):
     job = await session.get(Job, payload.convert_job_id)
     if not job:
