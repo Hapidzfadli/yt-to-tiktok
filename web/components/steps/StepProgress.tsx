@@ -8,6 +8,7 @@ import type { JobStatus, ProgressEvent } from "@/lib/types";
 interface Props {
   jobId: string;
   onRestart: () => void;
+  onPublish?: () => void;
 }
 
 const LABELS: Record<JobStatus, string> = {
@@ -19,7 +20,7 @@ const LABELS: Record<JobStatus, string> = {
   failed: "Gagal memproses",
 };
 
-export function StepProgress({ jobId, onRestart }: Props) {
+export function StepProgress({ jobId, onRestart, onPublish }: Props) {
   const [event, setEvent] = useState<ProgressEvent | null>(null);
   const [transportError, setTransportError] = useState(false);
 
@@ -72,16 +73,26 @@ export function StepProgress({ jobId, onRestart }: Props) {
       {done && event?.output_url && (
         <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/20 p-4 space-y-3">
           <p className="text-sm text-emerald-400 font-medium">
-            Video siap! Unduh atau lanjutkan ke TikTok (Phase 2).
+            Video siap! Unduh atau langsung publikasi ke TikTok.
           </p>
-          <a
-            href={event.output_url}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-block rounded-md bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-4 py-2"
-          >
-            Buka hasil
-          </a>
+          <div className="flex flex-wrap gap-2">
+            <a
+              href={event.output_url}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-md bg-neutral-800 hover:bg-neutral-700 text-white text-sm font-medium px-4 py-2"
+            >
+              Buka hasil
+            </a>
+            {onPublish && (
+              <button
+                onClick={onPublish}
+                className="rounded-md bg-brand hover:bg-brand-dark text-white text-sm font-medium px-4 py-2"
+              >
+                Publikasi ke TikTok
+              </button>
+            )}
+          </div>
         </div>
       )}
 

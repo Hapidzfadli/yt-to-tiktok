@@ -3,8 +3,8 @@ from __future__ import annotations
 import re
 import shlex
 import subprocess
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
 
 _ASPECT_FILTERS = {
     "9:16": (

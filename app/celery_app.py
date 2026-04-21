@@ -1,8 +1,15 @@
 from celery import Celery
+from celery.signals import worker_process_init
 
 from app.config import get_settings
+from app.utils.logging import setup_logging
 
 settings = get_settings()
+
+
+@worker_process_init.connect
+def _init_worker(**_: object) -> None:
+    setup_logging()
 
 celery_app = Celery(
     "yt2tt",

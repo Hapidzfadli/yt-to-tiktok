@@ -25,11 +25,22 @@ Frontend (Next.js 14 + Tailwind):
 - [x] Real-time progress bar dari SSE
 - [x] Pilih aspect (9:16 / 1:1 / 16:9) + trim start/end
 
-## Phase 2 (next) — TikTok Integration
+## Phase 2 (current) — TikTok Integration
 
-- [ ] OAuth 2.0 login flow
-- [ ] Token storage (encrypted) + auto-refresh
-- [ ] TikTok Content Posting API v2 (init → chunk upload → publish)
+- [x] OAuth 2.0 + PKCE login flow: `/api/auth/tiktok/login`, `/callback`
+- [x] Token storage terenkripsi (Fernet) + auto-refresh saat expired
+- [x] Content Posting API v2: init → chunk upload (5–64 MiB) → status poll
+- [x] `POST /api/tiktok/publish` + Celery task `publish_to_tiktok`
+- [x] Frontend step "Publish": pilih akun, caption, privacy, progress SSE
+
+### Setup TikTok
+
+1. Daftarkan app di https://developers.tiktok.com/ (Login Kit + Content Posting API)
+2. Set `TIKTOK_CLIENT_KEY`, `TIKTOK_CLIENT_SECRET`, dan redirect URI
+   (`http://localhost:8000/api/auth/tiktok/callback` untuk dev)
+3. Generate Fernet key: `python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"`
+   — taruh di `FERNET_KEY`
+4. `docker compose up` → buka `http://localhost:3000` → "Hubungkan akun TikTok"
 
 ## Phase 3 — Production
 

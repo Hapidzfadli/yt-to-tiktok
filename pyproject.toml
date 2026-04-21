@@ -1,0 +1,15 @@
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "W"]
+# E501: line-length handled by formatter; B008: FastAPI Depends() pattern
+ignore = ["E501", "B008"]
+
+[tool.ruff.lint.per-file-ignores]
+"app/__init__.py" = ["F401"]
+"app/api/__init__.py" = ["F401"]
+"app/services/__init__.py" = ["F401"]
+"app/utils/__init__.py" = ["F401"]
+"scripts/__init__.py" = ["F401"]
