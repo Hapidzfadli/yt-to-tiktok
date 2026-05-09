@@ -16,6 +16,7 @@ _BASE_OPTS: dict[str, Any] = {
     "no_warnings": True,
     "skip_download": True,
     "noplaylist": True,
+    "format": "bestvideo*+bestaudio*/best*",
 }
 
 

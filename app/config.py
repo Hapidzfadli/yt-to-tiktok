@@ -17,6 +17,8 @@ class Settings(BaseSettings):
 
     s3_bucket: str = ""
     s3_region: str = "ap-southeast-1"
+    s3_endpoint_url: str = ""         # kosong = AWS; isi untuk MinIO/custom
+    s3_public_endpoint_url: str = ""  # URL yang bisa diakses browser (presigned URL)
     aws_access_key_id: str = ""
     aws_secret_access_key: str = ""
     s3_presign_expires: int = 86400

@@ -1,11 +1,10 @@
-from __future__ import annotations
-
 import uuid
 from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel, Field
 from sqlalchemy.ext.asyncio import AsyncSession
+from starlette.responses import Response
 
 from app.database import get_session
 from app.models import Job, JobStatus, PublishJob, PublishStatus, TiktokAccount
@@ -45,6 +44,7 @@ class PublishJobView(BaseModel):
 @limiter.limit("10/minute")
 async def publish_endpoint(
     request: Request,
+    response: Response,
     payload: PublishRequest,
     session: AsyncSession = Depends(get_session),
 ):

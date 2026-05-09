@@ -1,10 +1,9 @@
-from __future__ import annotations
-
 import uuid
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.concurrency import run_in_threadpool
 from sqlalchemy.ext.asyncio import AsyncSession
+from starlette.responses import Response
 
 from app.database import get_session
 from app.models import Job, JobStatus
@@ -24,7 +23,7 @@ router = APIRouter()
 @router.post("/fetch-info", response_model=VideoInfo)
 @limiter.limit("30/minute")
 async def fetch_info_endpoint(
-    request: Request, payload: FetchInfoRequest
+    request: Request, response: Response, payload: FetchInfoRequest
 ) -> VideoInfo:
     try:
         return await run_in_threadpool(fetch_info, str(payload.url))
@@ -36,6 +35,7 @@ async def fetch_info_endpoint(
 @limiter.limit("10/minute")
 async def convert_endpoint(
     request: Request,
+    response: Response,
     payload: ConvertRequest,
     session: AsyncSession = Depends(get_session),
 ) -> JobCreated:
