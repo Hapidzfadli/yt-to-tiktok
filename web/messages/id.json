@@ -1,0 +1,232 @@
+{
+  "metadata": {
+    "title": "yt-to-tiktok — Konversi YouTube ke TikTok",
+    "description": "Unduh, potong, reframe video YouTube ke 9:16 dan publikasi langsung ke TikTok. Powered by FFmpeg & TikTok Content Posting API."
+  },
+  "navbar": {
+    "language": "Bahasa",
+    "ctaConvert": "Mulai konversi",
+    "linkFeatures": "Fitur",
+    "linkHowItWorks": "Cara kerja",
+    "linkFaq": "FAQ",
+    "tiktokStatus": {
+      "connect": "Connect TikTok",
+      "connected": "Terhubung"
+    }
+  },
+  "hero": {
+    "badge": "Powered by FFmpeg + TikTok API v2",
+    "headline": "Dari YouTube ke TikTok dalam hitungan menit",
+    "subheadline": "Unduh video YouTube, potong segmen yang penting, reframe ke 9:16, lalu publikasi langsung ke akun TikTok kamu — tanpa watermark, tanpa ribet.",
+    "ctaPrimary": "Mulai konversi gratis",
+    "ctaSecondary": "Lihat cara kerja",
+    "mockup": {
+      "vertical": "9:16 untuk TikTok",
+      "square": "1:1 untuk feed",
+      "landscape": "16:9 asli"
+    }
+  },
+  "converter": {
+    "title": "Konversi video kamu",
+    "subtitle": "Tempel URL YouTube, atur opsi, lalu publikasi langsung ke TikTok.",
+    "steps": {
+      "url": "URL",
+      "preview": "Preview",
+      "options": "Opsi",
+      "progress": "Progress",
+      "publish": "Publish"
+    },
+    "errors": {
+      "fetchInfo": "Gagal mengambil metadata",
+      "convert": "Gagal memulai konversi"
+    },
+    "preStep": {
+      "title": "Pilih akun TikTok kamu",
+      "subtitle": "Hubungkan akun TikTok untuk bisa publikasi hasil konversi langsung.",
+      "cta": "Mulai Konversi",
+      "skipHint": "Bisa ganti akun nanti di step Publish"
+    },
+    "stepUrl": {
+      "label": "URL video YouTube",
+      "placeholder": "https://www.youtube.com/watch?v=...",
+      "submit": "Lanjutkan",
+      "loading": "Mengambil metadata..."
+    },
+    "stepPreview": {
+      "back": "Kembali",
+      "next": "Atur konversi",
+      "views": "views",
+      "uploaderFallback": "—"
+    },
+    "stepOptions": {
+      "aspectTitle": "Aspect ratio",
+      "aspectHints": {
+        "9:16": "TikTok / Reels / Shorts",
+        "1:1": "Square",
+        "16:9": "Landscape"
+      },
+      "trimTitle": "Trim",
+      "trimDuration": "(durasi total {duration})",
+      "trimStart": "Start (detik)",
+      "trimEnd": "End (detik)",
+      "captionLabel": "Tambahkan caption otomatis (coming soon)",
+      "back": "Kembali",
+      "submit": "Mulai konversi",
+      "submitting": "Memulai job..."
+    },
+    "stepProgress": {
+      "labels": {
+        "pending": "Menunggu worker...",
+        "downloading": "Mengunduh video dari YouTube...",
+        "converting": "Mengonversi (trim + reframe)...",
+        "uploading": "Mengunggah hasil...",
+        "completed": "Selesai!",
+        "failed": "Gagal memproses"
+      },
+      "jobIdPrefix": "Job ID:",
+      "transportError": "Koneksi SSE terputus, mencoba menyambung ulang...",
+      "doneMessage": "Video siap! Unduh atau langsung publikasi ke TikTok.",
+      "openOutput": "Buka hasil",
+      "publishToTiktok": "Publikasi ke TikTok",
+      "restart": "Konversi video lain"
+    },
+    "stepPublish": {
+      "labels": {
+        "pending": "Menunggu...",
+        "uploading": "Mengunggah ke TikTok...",
+        "processing": "TikTok sedang memproses...",
+        "published": "Terpublikasi!",
+        "failed": "Gagal publikasi"
+      },
+      "privacyTitle": "Privasi",
+      "privacy": {
+        "self": "Private (hanya saya)",
+        "friends": "Mutual friends",
+        "public": "Publik"
+      },
+      "captionLabel": "Caption",
+      "captionPlaceholder": "Tulis caption...",
+      "submit": "Publikasi ke TikTok",
+      "submitting": "Memulai...",
+      "selectAccountError": "Pilih akun TikTok terlebih dahulu",
+      "publishError": "Gagal memulai publikasi",
+      "publishIdPrefix": "publish_id:",
+      "doneMessage": "Video sudah dipublikasi. Cek app TikTok untuk melihat hasilnya.",
+      "restart": "Konversi video lain"
+    }
+  },
+  "tiktokConnect": {
+    "loading": "Memuat akun...",
+    "loadError": "Gagal memuat akun",
+    "connect": "Hubungkan akun TikTok",
+    "postingAs": "Posting sebagai",
+    "addAccount": "+ Tambah akun"
+  },
+  "features": {
+    "title": "Semua yang kamu butuhkan",
+    "subtitle": "Tools profesional untuk content creator yang ingin repurpose konten YouTube ke TikTok dengan cepat.",
+    "items": {
+      "aspect": {
+        "title": "Multi aspect ratio",
+        "description": "9:16 untuk TikTok, 1:1 untuk feed, 16:9 untuk landscape — reframe otomatis dengan FFmpeg."
+      },
+      "trim": {
+        "title": "Trim presisi",
+        "description": "Pilih segmen video yang paling engaging. Cocok untuk highlight, hook, atau klip viral."
+      },
+      "publish": {
+        "title": "Direct publish",
+        "description": "OAuth langsung ke TikTok. Publikasi tanpa download manual, langsung dari browser."
+      },
+      "watermark": {
+        "title": "Tanpa watermark",
+        "description": "Output bersih, kualitas asli YouTube — tidak ada watermark layanan tambahan."
+      }
+    }
+  },
+  "howItWorks": {
+    "title": "Cara kerjanya",
+    "subtitle": "Tiga langkah sederhana dari URL ke TikTok.",
+    "steps": {
+      "paste": {
+        "title": "Tempel URL",
+        "description": "Copy URL video YouTube, tempel ke kolom input. Kami fetch metadata otomatis."
+      },
+      "adjust": {
+        "title": "Atur opsi",
+        "description": "Pilih aspect ratio, trim segmen, dan opsi caption. Preview dulu sebelum konversi."
+      },
+      "publish": {
+        "title": "Publikasi",
+        "description": "Connect akun TikTok via OAuth, tulis caption, pilih privasi, lalu klik publish."
+      }
+    }
+  },
+  "useCases": {
+    "title": "Untuk siapa?",
+    "subtitle": "Cocok buat siapapun yang ingin tumbuh di TikTok dengan konten dari YouTube.",
+    "items": {
+      "creator": {
+        "title": "Content Creator",
+        "description": "Repurpose long-form content YouTube jadi short-form TikTok. Multiplikasikan jangkauan tanpa shooting ulang."
+      },
+      "marketer": {
+        "title": "Marketer",
+        "description": "Distribusikan kampanye, testimoni, atau product demo dari YouTube ke TikTok dalam format vertikal."
+      },
+      "educator": {
+        "title": "Educator",
+        "description": "Potong tutorial panjang menjadi tip-tip pendek yang viral-friendly untuk audience Gen Z."
+      }
+    }
+  },
+  "faq": {
+    "title": "Pertanyaan umum",
+    "subtitle": "Belum jelas? Ini jawaban paling sering ditanyakan.",
+    "items": {
+      "legal": {
+        "question": "Apakah legal mendownload video YouTube?",
+        "answer": "Pastikan kamu punya hak atas konten yang akan diunggah ulang ke TikTok — entah konten sendiri, dengan izin pemilik, atau yang sudah berlisensi terbuka. Kami hanya menyediakan tool teknis; tanggung jawab hak cipta ada di pengguna."
+      },
+      "format": {
+        "question": "Format video apa saja yang didukung?",
+        "answer": "Output kami selalu MP4 (H.264 + AAC) sesuai requirement TikTok. Input bisa dari hampir semua URL YouTube publik (video, shorts, live yang sudah selesai)."
+      },
+      "quality": {
+        "question": "Bagaimana kualitas video hasilnya?",
+        "answer": "Kami pilih kualitas terbaik dari YouTube (sampai 1080p tergantung video asli) dan transcode dengan preset FFmpeg yang dioptimalkan untuk TikTok — tidak ada watermark atau overlay tambahan."
+      },
+      "duration": {
+        "question": "Apakah ada batasan durasi?",
+        "answer": "TikTok membatasi video sampai 10 menit untuk akun standar. Disarankan trim ke 15-90 detik untuk performa terbaik di feed TikTok."
+      },
+      "tiktokAccount": {
+        "question": "Apakah saya perlu akun TikTok khusus?",
+        "answer": "Tidak, akun TikTok biasa cukup. Kamu hanya perlu authorize aplikasi via OAuth sekali. Token kami simpan terenkripsi dan auto-refresh saat expired."
+      },
+      "cost": {
+        "question": "Apakah berbayar?",
+        "answer": "Tool ini open source dan bisa di-self-host. Versi hosted (jika ada) akan punya tier gratis untuk penggunaan personal."
+      }
+    }
+  },
+  "footer": {
+    "tagline": "Tool open-source untuk repurpose konten YouTube ke TikTok dengan FFmpeg + TikTok API v2.",
+    "columns": {
+      "product": "Produk",
+      "resources": "Resource",
+      "legal": "Legal"
+    },
+    "links": {
+      "converter": "Converter",
+      "features": "Fitur",
+      "howItWorks": "Cara kerja",
+      "faq": "FAQ",
+      "github": "GitHub",
+      "apiDocs": "API Docs",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    },
+    "copyright": "© {year} yt-to-tiktok. Open source di GitHub."
+  }
+}

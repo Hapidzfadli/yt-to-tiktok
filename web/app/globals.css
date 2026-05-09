@@ -6,11 +6,19 @@
   color-scheme: dark;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   height: 100%;
 }
 
 body {
-  @apply bg-neutral-950 text-neutral-100 antialiased;
+  @apply bg-neutral-950 text-neutral-100 antialiased font-sans;
+}
+
+::selection {
+  background: rgba(255, 0, 80, 0.3);
 }

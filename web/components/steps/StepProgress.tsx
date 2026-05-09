@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { subscribeJob } from "@/lib/api";
@@ -11,16 +12,8 @@ interface Props {
   onPublish?: () => void;
 }
 
-const LABELS: Record<JobStatus, string> = {
-  pending: "Menunggu worker...",
-  downloading: "Mengunduh video dari YouTube...",
-  converting: "Mengonversi (trim + reframe)...",
-  uploading: "Mengunggah hasil...",
-  completed: "Selesai!",
-  failed: "Gagal memproses",
-};
-
 export function StepProgress({ jobId, onRestart, onPublish }: Props) {
+  const t = useTranslations("converter.stepProgress");
   const [event, setEvent] = useState<ProgressEvent | null>(null);
   const [transportError, setTransportError] = useState(false);
 
@@ -44,7 +37,7 @@ export function StepProgress({ jobId, onRestart, onPublish }: Props) {
     <div className="space-y-5">
       <div className="space-y-2">
         <div className="flex justify-between text-sm">
-          <span className="text-neutral-300">{LABELS[status]}</span>
+          <span className="text-neutral-300">{t(`labels.${status}`)}</span>
           <span className="text-neutral-400 tabular-nums">{progress}%</span>
         </div>
         <div className="h-2 w-full bg-neutral-800 rounded-full overflow-hidden">
@@ -55,7 +48,9 @@ export function StepProgress({ jobId, onRestart, onPublish }: Props) {
             style={{ width: `${progress}%` }}
           />
         </div>
-        <p className="text-xs text-neutral-500">Job ID: {jobId}</p>
+        <p className="text-xs text-neutral-500">
+          {t("jobIdPrefix")} {jobId}
+        </p>
       </div>
 
       {failed && event?.error && (
@@ -65,15 +60,13 @@ export function StepProgress({ jobId, onRestart, onPublish }: Props) {
       )}
 
       {transportError && !done && !failed && (
-        <p className="text-xs text-yellow-400">
-          Koneksi SSE terputus, mencoba menyambung ulang...
-        </p>
+        <p className="text-xs text-yellow-400">{t("transportError")}</p>
       )}
 
       {done && event?.output_url && (
         <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/20 p-4 space-y-3">
           <p className="text-sm text-emerald-400 font-medium">
-            Video siap! Unduh atau langsung publikasi ke TikTok.
+            {t("doneMessage")}
           </p>
           <div className="flex flex-wrap gap-2">
             <a
@@ -82,14 +75,14 @@ export function StepProgress({ jobId, onRestart, onPublish }: Props) {
               rel="noreferrer"
               className="rounded-md bg-neutral-800 hover:bg-neutral-700 text-white text-sm font-medium px-4 py-2"
             >
-              Buka hasil
+              {t("openOutput")}
             </a>
             {onPublish && (
               <button
                 onClick={onPublish}
                 className="rounded-md bg-brand hover:bg-brand-dark text-white text-sm font-medium px-4 py-2"
               >
-                Publikasi ke TikTok
+                {t("publishToTiktok")}
               </button>
             )}
           </div>
@@ -101,7 +94,7 @@ export function StepProgress({ jobId, onRestart, onPublish }: Props) {
           onClick={onRestart}
           className="w-full rounded-lg bg-neutral-800 hover:bg-neutral-700 py-2.5 text-sm font-medium"
         >
-          Konversi video lain
+          {t("restart")}
         </button>
       )}
     </div>

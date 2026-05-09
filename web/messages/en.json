@@ -1,0 +1,232 @@
+{
+  "metadata": {
+    "title": "yt-to-tiktok — Convert YouTube to TikTok",
+    "description": "Download, trim, reframe YouTube videos to 9:16 and publish directly to TikTok. Powered by FFmpeg & TikTok Content Posting API."
+  },
+  "navbar": {
+    "language": "Language",
+    "ctaConvert": "Start converting",
+    "linkFeatures": "Features",
+    "linkHowItWorks": "How it works",
+    "linkFaq": "FAQ",
+    "tiktokStatus": {
+      "connect": "Connect TikTok",
+      "connected": "Connected"
+    }
+  },
+  "hero": {
+    "badge": "Powered by FFmpeg + TikTok API v2",
+    "headline": "From YouTube to TikTok in minutes",
+    "subheadline": "Download YouTube videos, trim the parts that matter, reframe to 9:16, and publish straight to your TikTok account — no watermarks, no hassle.",
+    "ctaPrimary": "Start converting free",
+    "ctaSecondary": "See how it works",
+    "mockup": {
+      "vertical": "9:16 for TikTok",
+      "square": "1:1 for feed",
+      "landscape": "16:9 original"
+    }
+  },
+  "converter": {
+    "title": "Convert your video",
+    "subtitle": "Paste a YouTube URL, configure options, then publish straight to TikTok.",
+    "steps": {
+      "url": "URL",
+      "preview": "Preview",
+      "options": "Options",
+      "progress": "Progress",
+      "publish": "Publish"
+    },
+    "errors": {
+      "fetchInfo": "Failed to fetch metadata",
+      "convert": "Failed to start conversion"
+    },
+    "preStep": {
+      "title": "Choose your TikTok account",
+      "subtitle": "Connect a TikTok account so you can publish converted videos directly.",
+      "cta": "Start Converting",
+      "skipHint": "You can switch accounts later in the Publish step"
+    },
+    "stepUrl": {
+      "label": "YouTube video URL",
+      "placeholder": "https://www.youtube.com/watch?v=...",
+      "submit": "Continue",
+      "loading": "Fetching metadata..."
+    },
+    "stepPreview": {
+      "back": "Back",
+      "next": "Configure conversion",
+      "views": "views",
+      "uploaderFallback": "—"
+    },
+    "stepOptions": {
+      "aspectTitle": "Aspect ratio",
+      "aspectHints": {
+        "9:16": "TikTok / Reels / Shorts",
+        "1:1": "Square",
+        "16:9": "Landscape"
+      },
+      "trimTitle": "Trim",
+      "trimDuration": "(total duration {duration})",
+      "trimStart": "Start (seconds)",
+      "trimEnd": "End (seconds)",
+      "captionLabel": "Add automatic captions (coming soon)",
+      "back": "Back",
+      "submit": "Start conversion",
+      "submitting": "Starting job..."
+    },
+    "stepProgress": {
+      "labels": {
+        "pending": "Waiting for worker...",
+        "downloading": "Downloading from YouTube...",
+        "converting": "Converting (trim + reframe)...",
+        "uploading": "Uploading result...",
+        "completed": "Done!",
+        "failed": "Processing failed"
+      },
+      "jobIdPrefix": "Job ID:",
+      "transportError": "SSE connection lost, reconnecting...",
+      "doneMessage": "Video is ready! Download or publish straight to TikTok.",
+      "openOutput": "Open result",
+      "publishToTiktok": "Publish to TikTok",
+      "restart": "Convert another video"
+    },
+    "stepPublish": {
+      "labels": {
+        "pending": "Waiting...",
+        "uploading": "Uploading to TikTok...",
+        "processing": "TikTok is processing...",
+        "published": "Published!",
+        "failed": "Publishing failed"
+      },
+      "privacyTitle": "Privacy",
+      "privacy": {
+        "self": "Private (only me)",
+        "friends": "Mutual friends",
+        "public": "Public"
+      },
+      "captionLabel": "Caption",
+      "captionPlaceholder": "Write a caption...",
+      "submit": "Publish to TikTok",
+      "submitting": "Starting...",
+      "selectAccountError": "Select a TikTok account first",
+      "publishError": "Failed to start publishing",
+      "publishIdPrefix": "publish_id:",
+      "doneMessage": "Video has been published. Check the TikTok app to see the result.",
+      "restart": "Convert another video"
+    }
+  },
+  "tiktokConnect": {
+    "loading": "Loading accounts...",
+    "loadError": "Failed to load accounts",
+    "connect": "Connect TikTok account",
+    "postingAs": "Posting as",
+    "addAccount": "+ Add account"
+  },
+  "features": {
+    "title": "Everything you need",
+    "subtitle": "Professional tools for content creators who want to repurpose YouTube content for TikTok fast.",
+    "items": {
+      "aspect": {
+        "title": "Multi aspect ratios",
+        "description": "9:16 for TikTok, 1:1 for feed, 16:9 for landscape — automatic reframing with FFmpeg."
+      },
+      "trim": {
+        "title": "Precise trimming",
+        "description": "Pick the most engaging segments. Perfect for highlights, hooks, or viral clips."
+      },
+      "publish": {
+        "title": "Direct publish",
+        "description": "OAuth straight to TikTok. Publish without manual downloads, all from your browser."
+      },
+      "watermark": {
+        "title": "No watermark",
+        "description": "Clean output, original YouTube quality — no service watermarks added."
+      }
+    }
+  },
+  "howItWorks": {
+    "title": "How it works",
+    "subtitle": "Three simple steps from URL to TikTok.",
+    "steps": {
+      "paste": {
+        "title": "Paste URL",
+        "description": "Copy the YouTube video URL, paste it into the input. We fetch the metadata automatically."
+      },
+      "adjust": {
+        "title": "Configure options",
+        "description": "Choose aspect ratio, trim segments, and caption options. Preview before converting."
+      },
+      "publish": {
+        "title": "Publish",
+        "description": "Connect your TikTok account via OAuth, write a caption, choose privacy, then hit publish."
+      }
+    }
+  },
+  "useCases": {
+    "title": "Who is this for?",
+    "subtitle": "Built for anyone who wants to grow on TikTok with content sourced from YouTube.",
+    "items": {
+      "creator": {
+        "title": "Content Creator",
+        "description": "Repurpose long-form YouTube content into short-form TikTok. Multiply your reach without re-shooting."
+      },
+      "marketer": {
+        "title": "Marketer",
+        "description": "Distribute campaigns, testimonials, or product demos from YouTube to TikTok in vertical format."
+      },
+      "educator": {
+        "title": "Educator",
+        "description": "Cut lengthy tutorials into bite-sized, viral-friendly tips for a Gen Z audience."
+      }
+    }
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "subtitle": "Still unclear? Here are the most common questions.",
+    "items": {
+      "legal": {
+        "question": "Is downloading YouTube videos legal?",
+        "answer": "Make sure you have the rights to the content you're re-uploading to TikTok — whether it's your own, used with permission, or openly licensed. We only provide the technical tool; copyright responsibility is on the user."
+      },
+      "format": {
+        "question": "Which video formats are supported?",
+        "answer": "Output is always MP4 (H.264 + AAC) per TikTok's requirements. Input can come from almost any public YouTube URL (videos, shorts, finished livestreams)."
+      },
+      "quality": {
+        "question": "How is the output quality?",
+        "answer": "We pick the best quality from YouTube (up to 1080p depending on the source) and transcode with FFmpeg presets optimized for TikTok — no watermarks or overlays added."
+      },
+      "duration": {
+        "question": "Are there duration limits?",
+        "answer": "TikTok limits videos to 10 minutes for standard accounts. We recommend trimming to 15-90 seconds for best feed performance."
+      },
+      "tiktokAccount": {
+        "question": "Do I need a special TikTok account?",
+        "answer": "No, a regular TikTok account is enough. You only need to authorize the app via OAuth once. Tokens are stored encrypted and auto-refresh when expired."
+      },
+      "cost": {
+        "question": "Is it paid?",
+        "answer": "This tool is open source and self-hostable. The hosted version (if any) will have a free tier for personal use."
+      }
+    }
+  },
+  "footer": {
+    "tagline": "An open-source tool for repurposing YouTube content to TikTok with FFmpeg + TikTok API v2.",
+    "columns": {
+      "product": "Product",
+      "resources": "Resources",
+      "legal": "Legal"
+    },
+    "links": {
+      "converter": "Converter",
+      "features": "Features",
+      "howItWorks": "How it works",
+      "faq": "FAQ",
+      "github": "GitHub",
+      "apiDocs": "API Docs",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    },
+    "copyright": "© {year} yt-to-tiktok. Open source on GitHub."
+  }
+}

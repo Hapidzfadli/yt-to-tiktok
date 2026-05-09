@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { formatDuration } from "@/lib/format";
@@ -13,11 +14,7 @@ interface Props {
   error: string | null;
 }
 
-const ASPECTS: { value: Aspect; label: string; hint: string }[] = [
-  { value: "9:16", label: "9:16", hint: "TikTok / Reels / Shorts" },
-  { value: "1:1", label: "1:1", hint: "Square" },
-  { value: "16:9", label: "16:9", hint: "Landscape" },
-];
+const ASPECT_VALUES: Aspect[] = ["9:16", "1:1", "16:9"];
 
 export function StepOptions({
   info,
@@ -26,6 +23,7 @@ export function StepOptions({
   submitting,
   error,
 }: Props) {
+  const t = useTranslations("converter.stepOptions");
   const maxEnd = info.duration ?? 0;
   const [aspect, setAspect] = useState<Aspect>("9:16");
   const [start, setStart] = useState(0);
@@ -44,20 +42,22 @@ export function StepOptions({
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-sm font-medium mb-2">Aspect ratio</p>
+        <p className="text-sm font-medium mb-2">{t("aspectTitle")}</p>
         <div className="grid grid-cols-3 gap-2">
-          {ASPECTS.map((a) => (
+          {ASPECT_VALUES.map((value) => (
             <button
-              key={a.value}
-              onClick={() => setAspect(a.value)}
+              key={value}
+              onClick={() => setAspect(value)}
               className={`rounded-lg border px-3 py-3 text-left transition ${
-                aspect === a.value
+                aspect === value
                   ? "border-brand bg-brand/10"
                   : "border-neutral-800 bg-neutral-900 hover:border-neutral-700"
               }`}
             >
-              <div className="font-semibold">{a.label}</div>
-              <div className="text-xs text-neutral-400">{a.hint}</div>
+              <div className="font-semibold">{value}</div>
+              <div className="text-xs text-neutral-400">
+                {t(`aspectHints.${value}`)}
+              </div>
             </button>
           ))}
         </div>
@@ -65,14 +65,14 @@ export function StepOptions({
 
       <div>
         <p className="text-sm font-medium mb-2">
-          Trim{" "}
+          {t("trimTitle")}{" "}
           <span className="text-neutral-500 font-normal">
-            (durasi total {formatDuration(info.duration)})
+            {t("trimDuration", { duration: formatDuration(info.duration) })}
           </span>
         </p>
         <div className="grid grid-cols-2 gap-3">
           <label className="text-xs text-neutral-400">
-            Start (detik)
+            {t("trimStart")}
             <input
               type="number"
               min={0}
@@ -83,7 +83,7 @@ export function StepOptions({
             />
           </label>
           <label className="text-xs text-neutral-400">
-            End (detik)
+            {t("trimEnd")}
             <input
               type="number"
               min={0}
@@ -103,7 +103,7 @@ export function StepOptions({
           onChange={(e) => setAddCaption(e.target.checked)}
           className="h-4 w-4 rounded border-neutral-700 bg-neutral-900 accent-brand"
         />
-        Tambahkan caption otomatis (coming soon)
+        {t("captionLabel")}
       </label>
 
       {error && (
@@ -117,14 +117,14 @@ export function StepOptions({
           onClick={onBack}
           className="rounded-lg bg-neutral-800 hover:bg-neutral-700 px-4 py-2.5 text-sm font-medium"
         >
-          Kembali
+          {t("back")}
         </button>
         <button
           onClick={submit}
           disabled={submitting}
           className="flex-1 rounded-lg bg-brand hover:bg-brand-dark disabled:opacity-50 text-white font-medium py-2.5 transition"
         >
-          {submitting ? "Memulai job..." : "Mulai konversi"}
+          {submitting ? t("submitting") : t("submit")}
         </button>
       </div>
     </div>

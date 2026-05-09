@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { listTiktokAccounts, tiktokLoginUrl } from "@/lib/api";
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export function ConnectTiktok({ selected, onSelect }: Props) {
+  const t = useTranslations("tiktokConnect");
   const [accounts, setAccounts] = useState<TiktokAccount[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -22,7 +24,7 @@ export function ConnectTiktok({ selected, onSelect }: Props) {
       if (!selected && data.length > 0) onSelect(data[0].open_id);
       setError(null);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to load accounts");
+      setError(e instanceof Error ? e.message : t("loadError"));
     } finally {
       setLoading(false);
     }
@@ -30,18 +32,11 @@ export function ConnectTiktok({ selected, onSelect }: Props) {
 
   useEffect(() => {
     refresh();
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("tiktok") === "connected") {
-      const openId = params.get("open_id");
-      if (openId) onSelect(openId);
-      window.history.replaceState({}, "", window.location.pathname);
-      setTimeout(refresh, 300);
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) {
-    return <div className="text-sm text-neutral-400">Memuat akun...</div>;
+    return <div className="text-sm text-neutral-400">{t("loading")}</div>;
   }
 
   if (error) {
@@ -58,14 +53,14 @@ export function ConnectTiktok({ selected, onSelect }: Props) {
         href={tiktokLoginUrl()}
         className="inline-flex items-center gap-2 rounded-lg bg-brand hover:bg-brand-dark text-white text-sm font-medium px-4 py-2"
       >
-        Hubungkan akun TikTok
+        {t("connect")}
       </a>
     );
   }
 
   return (
     <div className="space-y-2">
-      <p className="text-xs text-neutral-400">Posting sebagai</p>
+      <p className="text-xs text-neutral-400">{t("postingAs")}</p>
       <div className="flex flex-wrap gap-2">
         {accounts.map((a) => (
           <button
@@ -92,7 +87,7 @@ export function ConnectTiktok({ selected, onSelect }: Props) {
           href={tiktokLoginUrl()}
           className="rounded-lg border border-dashed border-neutral-700 px-3 py-2 text-sm text-neutral-400 hover:border-neutral-500 hover:text-neutral-200"
         >
-          + Tambah akun
+          {t("addAccount")}
         </a>
       </div>
     </div>

@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { formatDuration, formatViews } from "@/lib/format";
 import type { VideoInfo } from "@/lib/types";
 
@@ -10,6 +12,8 @@ interface Props {
 }
 
 export function StepPreview({ info, onBack, onNext }: Props) {
+  const t = useTranslations("converter.stepPreview");
+
   return (
     <div className="space-y-5">
       <div className="flex gap-4">
@@ -23,13 +27,15 @@ export function StepPreview({ info, onBack, onNext }: Props) {
         )}
         <div className="flex-1 min-w-0">
           <h3 className="text-lg font-semibold line-clamp-2">{info.title}</h3>
-          <p className="text-sm text-neutral-400 mt-1">{info.uploader ?? "—"}</p>
+          <p className="text-sm text-neutral-400 mt-1">
+            {info.uploader ?? t("uploaderFallback")}
+          </p>
           <div className="flex gap-3 mt-3 text-xs text-neutral-400">
             <span className="bg-neutral-800 px-2 py-1 rounded">
               {formatDuration(info.duration)}
             </span>
             <span className="bg-neutral-800 px-2 py-1 rounded">
-              {formatViews(info.view_count)} views
+              {formatViews(info.view_count)} {t("views")}
             </span>
           </div>
         </div>
@@ -46,13 +52,13 @@ export function StepPreview({ info, onBack, onNext }: Props) {
           onClick={onBack}
           className="rounded-lg bg-neutral-800 hover:bg-neutral-700 px-4 py-2.5 text-sm font-medium"
         >
-          Kembali
+          {t("back")}
         </button>
         <button
           onClick={onNext}
           className="flex-1 rounded-lg bg-brand hover:bg-brand-dark text-white font-medium py-2.5 transition"
         >
-          Atur konversi
+          {t("next")}
         </button>
       </div>
     </div>

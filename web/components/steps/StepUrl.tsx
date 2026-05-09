@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export function StepUrl({ onSubmit, loading, error }: Props) {
+  const t = useTranslations("converter.stepUrl");
   const [url, setUrl] = useState("");
 
   return (
@@ -20,12 +22,12 @@ export function StepUrl({ onSubmit, loading, error }: Props) {
       className="space-y-4"
     >
       <label className="block">
-        <span className="text-sm text-neutral-300">URL video YouTube</span>
+        <span className="text-sm text-neutral-300">{t("label")}</span>
         <input
           type="url"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
-          placeholder="https://www.youtube.com/watch?v=..."
+          placeholder={t("placeholder")}
           required
           className="mt-2 w-full rounded-lg bg-neutral-900 border border-neutral-800 px-4 py-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/30"
         />
@@ -42,7 +44,7 @@ export function StepUrl({ onSubmit, loading, error }: Props) {
         disabled={loading || !url.trim()}
         className="w-full rounded-lg bg-brand hover:bg-brand-dark disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-3 transition"
       >
-        {loading ? "Mengambil metadata..." : "Lanjutkan"}
+        {loading ? t("loading") : t("submit")}
       </button>
     </form>
   );

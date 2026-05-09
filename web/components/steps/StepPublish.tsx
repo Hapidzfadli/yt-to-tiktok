@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { ConnectTiktok } from "@/components/ConnectTiktok";
@@ -14,24 +15,18 @@ interface Props {
   convertJobId: string;
   defaultCaption: string;
   onRestart: () => void;
+  initialOpenId?: string | null;
 }
 
-const LABELS: Record<PublishStatus, string> = {
-  pending: "Menunggu...",
-  uploading: "Mengunggah ke TikTok...",
-  processing: "TikTok sedang memproses...",
-  published: "Terpublikasi!",
-  failed: "Gagal publikasi",
-};
-
-const PRIVACIES: { value: PrivacyLevel; label: string }[] = [
-  { value: "SELF_ONLY", label: "Private (hanya saya)" },
-  { value: "MUTUAL_FOLLOW_FRIENDS", label: "Mutual friends" },
-  { value: "PUBLIC_TO_EVERYONE", label: "Publik" },
+const PRIVACY_KEYS: { value: PrivacyLevel; key: "self" | "friends" | "public" }[] = [
+  { value: "SELF_ONLY", key: "self" },
+  { value: "MUTUAL_FOLLOW_FRIENDS", key: "friends" },
+  { value: "PUBLIC_TO_EVERYONE", key: "public" },
 ];
 
-export function StepPublish({ convertJobId, defaultCaption, onRestart }: Props) {
-  const [openId, setOpenId] = useState<string | null>(null);
+export function StepPublish({ convertJobId, defaultCaption, onRestart, initialOpenId }: Props) {
+  const t = useTranslations("converter.stepPublish");
+  const [openId, setOpenId] = useState<string | null>(initialOpenId ?? null);
   const [caption, setCaption] = useState(defaultCaption);
   const [privacy, setPrivacy] = useState<PrivacyLevel>("SELF_ONLY");
 
@@ -50,7 +45,7 @@ export function StepPublish({ convertJobId, defaultCaption, onRestart }: Props) 
 
   const submit = async () => {
     if (!openId) {
-      setError("Pilih akun TikTok terlebih dahulu");
+      setError(t("selectAccountError"));
       return;
     }
     setError(null);
@@ -64,7 +59,7 @@ export function StepPublish({ convertJobId, defaultCaption, onRestart }: Props) 
       });
       setPublishJobId(publish_job_id);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Gagal memulai publikasi");
+      setError(e instanceof Error ? e.message : t("publishError"));
     } finally {
       setSubmitting(false);
     }
@@ -80,7 +75,7 @@ export function StepPublish({ convertJobId, defaultCaption, onRestart }: Props) 
       <div className="space-y-5">
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-neutral-300">{LABELS[status]}</span>
+            <span className="text-neutral-300">{t(`labels.${status}`)}</span>
             <span className="text-neutral-400 tabular-nums">{progress}%</span>
           </div>
           <div className="h-2 w-full bg-neutral-800 rounded-full overflow-hidden">
@@ -93,7 +88,7 @@ export function StepPublish({ convertJobId, defaultCaption, onRestart }: Props) 
           </div>
           {event?.publish_id && (
             <p className="text-xs text-neutral-500">
-              publish_id: {event.publish_id}
+              {t("publishIdPrefix")} {event.publish_id}
             </p>
           )}
         </div>
@@ -106,7 +101,7 @@ export function StepPublish({ convertJobId, defaultCaption, onRestart }: Props) 
 
         {done && (
           <p className="text-sm text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-md px-3 py-2">
-            Video sudah dipublikasi. Cek app TikTok untuk melihat hasilnya.
+            {t("doneMessage")}
           </p>
         )}
 
@@ -115,7 +110,7 @@ export function StepPublish({ convertJobId, defaultCaption, onRestart }: Props) 
             onClick={onRestart}
             className="w-full rounded-lg bg-neutral-800 hover:bg-neutral-700 py-2.5 text-sm font-medium"
           >
-            Konversi video lain
+            {t("restart")}
           </button>
         )}
       </div>
@@ -127,14 +122,14 @@ export function StepPublish({ convertJobId, defaultCaption, onRestart }: Props) 
       <ConnectTiktok selected={openId} onSelect={setOpenId} />
 
       <label className="block">
-        <span className="text-sm text-neutral-300">Caption</span>
+        <span className="text-sm text-neutral-300">{t("captionLabel")}</span>
         <textarea
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
           rows={3}
           maxLength={2200}
           className="mt-2 w-full rounded-lg bg-neutral-900 border border-neutral-800 px-3 py-2 text-sm outline-none focus:border-brand"
-          placeholder="Tulis caption..."
+          placeholder={t("captionPlaceholder")}
         />
         <span className="text-xs text-neutral-500">
           {caption.length}/2200
@@ -142,9 +137,9 @@ export function StepPublish({ convertJobId, defaultCaption, onRestart }: Props) 
       </label>
 
       <div>
-        <p className="text-sm font-medium mb-2">Privasi</p>
+        <p className="text-sm font-medium mb-2">{t("privacyTitle")}</p>
         <div className="grid grid-cols-3 gap-2">
-          {PRIVACIES.map((p) => (
+          {PRIVACY_KEYS.map((p) => (
             <button
               key={p.value}
               onClick={() => setPrivacy(p.value)}
@@ -154,7 +149,7 @@ export function StepPublish({ convertJobId, defaultCaption, onRestart }: Props) 
                   : "border-neutral-800 bg-neutral-900 hover:border-neutral-700"
               }`}
             >
-              {p.label}
+              {t(`privacy.${p.key}`)}
             </button>
           ))}
         </div>
@@ -171,7 +166,7 @@ export function StepPublish({ convertJobId, defaultCaption, onRestart }: Props) 
         disabled={submitting || !openId}
         className="w-full rounded-lg bg-brand hover:bg-brand-dark disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-2.5 transition"
       >
-        {submitting ? "Memulai..." : "Publikasi ke TikTok"}
+        {submitting ? t("submitting") : t("submit")}
       </button>
     </div>
   );
