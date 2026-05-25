@@ -30,6 +30,7 @@ services:
         NEXT_PUBLIC_API_BASE_URL: https://yt-tiktok.pro
     environment:
       NEXT_PUBLIC_API_BASE_URL: https://yt-tiktok.pro
+    working_dir: /app
     volumes: []
     command: node server.js
     restart: unless-stopped
