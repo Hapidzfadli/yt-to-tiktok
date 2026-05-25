@@ -91,7 +91,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="http://localhost:8000/docs"
+                  href={`${process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000"}/docs`}
                   target="_blank"
                   rel="noreferrer"
                   className="hover:text-neutral-100 transition"
