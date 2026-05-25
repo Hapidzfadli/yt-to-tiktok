@@ -3,8 +3,6 @@ services:
     volumes:
       - media_tmp:/tmp/yt2tt
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 2
-    ports:
-      - "127.0.0.1:8000:8000"
     restart: unless-stopped
 
   worker:
@@ -13,20 +11,15 @@ services:
     restart: unless-stopped
 
   postgres:
-    ports: []
     restart: unless-stopped
 
   redis:
-    ports: []
     restart: unless-stopped
 
   minio:
     environment:
       MINIO_ROOT_USER: ${AWS_ACCESS_KEY_ID}
       MINIO_ROOT_PASSWORD: ${AWS_SECRET_ACCESS_KEY}
-    ports:
-      - "127.0.0.1:9000:9000"
-      - "127.0.0.1:9001:9001"
     restart: unless-stopped
 
   web:
@@ -38,7 +31,5 @@ services:
     environment:
       NEXT_PUBLIC_API_BASE_URL: https://yt-tiktok.pro
     volumes: []
-    ports:
-      - "127.0.0.1:3000:3000"
     command: node server.js
     restart: unless-stopped
