@@ -181,6 +181,27 @@ def init_direct_post(
     )
 
 
+def init_inbox_upload(
+    access_token: str,
+    video_size: int,
+    chunk_size: int,
+    total_chunk_count: int,
+) -> dict:
+    """POST /v2/post/publish/inbox/video/init/ (upload draft, requires video.upload scope)."""
+    s = _cfg()
+    body = {
+        "source_info": {
+            "source": "FILE_UPLOAD",
+            "video_size": video_size,
+            "chunk_size": chunk_size,
+            "total_chunk_count": total_chunk_count,
+        },
+    }
+    return _sync_post(
+        f"{s.tiktok_api_base}/v2/post/publish/inbox/video/init/", access_token, body
+    )
+
+
 def upload_chunk(
     upload_url: str, chunk: bytes, byte_start: int, byte_end: int, total_size: int
 ) -> None:

@@ -152,7 +152,9 @@ def _ensure_fresh_token(open_id: str) -> str:
         return refreshed["access_token"]
 
 
-def _resolve_local_source_by_url(convert_job_id: str, output_url: str | None) -> str:
+def _resolve_local_source_by_url(
+    convert_job_id: str, output_url: str | None, output_key: str | None = None
+) -> str:
     """Return a local file path for the converted video (download from S3 if needed)."""
     workdir = Path(settings.media_dir) / convert_job_id
     local = workdir / "out.mp4"
@@ -162,11 +164,18 @@ def _resolve_local_source_by_url(convert_job_id: str, output_url: str | None) ->
     if output_url and output_url.startswith("file://"):
         return output_url.replace("file://", "", 1)
 
-    if not output_url:
+    if not output_url and not output_key:
         raise RuntimeError("Converted video URL missing")
 
     workdir.mkdir(parents=True, exist_ok=True)
-    with httpx.stream("GET", output_url, timeout=120.0) as r:
+
+    # Use boto3 with the internal S3 endpoint to avoid presigned URL signature mismatch
+    # (presigned URLs are signed for the public host, not the internal Docker hostname).
+    if output_key and settings.s3_enabled:
+        s3.download_file(output_key, str(local))
+        return str(local)
+
+    with httpx.stream("GET", output_url, timeout=120.0) as r:  # type: ignore[arg-type]
         r.raise_for_status()
         with open(local, "wb") as f:
             for chunk in r.iter_bytes(chunk_size=1024 * 1024):
@@ -191,6 +200,8 @@ def publish_to_tiktok(self, publish_job_id: str) -> dict:
         open_id = pj.open_id
         convert_job_id = pj.convert_job_id
         job_output_url = job.output_url
+        job_output_key = job.output_key
+        account_scopes = account.scopes or ""
 
     try:
         access_token = _ensure_fresh_token(open_id)
@@ -205,18 +216,27 @@ def publish_to_tiktok(self, publish_job_id: str) -> dict:
 
     try:
         _publish_emit(publish_job_id, PublishStatus.UPLOADING.value, 5)
-        local_path = _resolve_local_source_by_url(convert_job_id, job_output_url)
+        local_path = _resolve_local_source_by_url(convert_job_id, job_output_url, job_output_key)
         size = tiktok.file_size(local_path)
         chunk_size, total_chunks = tiktok.pick_chunk_size(size)
 
-        init = tiktok.init_direct_post(
-            access_token,
-            video_size=size,
-            chunk_size=chunk_size,
-            total_chunk_count=total_chunks,
-            caption=caption,
-            privacy=privacy,
-        )
+        use_direct_post = "video.publish" in account_scopes
+        if use_direct_post:
+            init = tiktok.init_direct_post(
+                access_token,
+                video_size=size,
+                chunk_size=chunk_size,
+                total_chunk_count=total_chunks,
+                caption=caption,
+                privacy=privacy,
+            )
+        else:
+            init = tiktok.init_inbox_upload(
+                access_token,
+                video_size=size,
+                chunk_size=chunk_size,
+                total_chunk_count=total_chunks,
+            )
         data = init.get("data", {})
         publish_id = data.get("publish_id")
         upload_url = data.get("upload_url")

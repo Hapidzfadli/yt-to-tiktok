@@ -112,6 +112,7 @@
       "publishError": "Failed to start publishing",
       "publishIdPrefix": "publish_id:",
       "doneMessage": "Video has been published. Check the TikTok app to see the result.",
+      "retry": "Try again",
       "restart": "Convert another video"
     }
   },

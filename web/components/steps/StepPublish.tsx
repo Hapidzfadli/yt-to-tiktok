@@ -65,6 +65,11 @@ export function StepPublish({ convertJobId, defaultCaption, onRestart, initialOp
     }
   };
 
+  const retry = () => {
+    setPublishJobId(null);
+    setEvent(null);
+  };
+
   const status: PublishStatus = event?.status ?? "pending";
   const progress = event?.progress ?? 0;
   const done = status === "published";
@@ -106,12 +111,22 @@ export function StepPublish({ convertJobId, defaultCaption, onRestart, initialOp
         )}
 
         {(done || failed) && (
-          <button
-            onClick={onRestart}
-            className="w-full rounded-lg bg-neutral-800 hover:bg-neutral-700 py-2.5 text-sm font-medium"
-          >
-            {t("restart")}
-          </button>
+          <div className="space-y-2">
+            {failed && (
+              <button
+                onClick={retry}
+                className="w-full rounded-lg bg-brand hover:bg-brand-dark py-2.5 text-sm font-medium text-white transition"
+              >
+                {t("retry")}
+              </button>
+            )}
+            <button
+              onClick={onRestart}
+              className="w-full rounded-lg bg-neutral-800 hover:bg-neutral-700 py-2.5 text-sm font-medium"
+            >
+              {t("restart")}
+            </button>
+          </div>
         )}
       </div>
     );

@@ -112,6 +112,7 @@
       "publishError": "Gagal memulai publikasi",
       "publishIdPrefix": "publish_id:",
       "doneMessage": "Video sudah dipublikasi. Cek app TikTok untuk melihat hasilnya.",
+      "retry": "Coba lagi",
       "restart": "Konversi video lain"
     }
   },

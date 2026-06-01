@@ -47,6 +47,12 @@ def presigned_url(key: str) -> str:
     )
 
 
+def download_file(key: str, local_path: str) -> None:
+    """Download an S3 object to local_path using the internal endpoint."""
+    s = get_settings()
+    _client().download_file(s.s3_bucket, key, local_path)
+
+
 def local_fallback_url(local_path: str) -> str:
     """Return a file:// URL for dev when S3 is not configured."""
     return Path(local_path).resolve().as_uri()
